@@ -1,0 +1,69 @@
+#include <iostream>
+//#include <algorithm>
+
+using namespace std;
+
+#define UP 0
+#define DOWN 1
+
+void swap(int* a, int* b)
+{
+	int temp = *a;
+
+	*a = *b;
+	*b = temp;
+}
+
+int search(int size, int a[], int mode = UP)
+{
+	int num = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (a[i] > 0)
+		{
+			if (num == 0)
+			{
+				num = a[i];
+			}
+			else if (num > a[i] && mode == UP)
+			{
+				num = a[i];
+			}
+			else if (num < a[i] && mode == DOWN)
+			{
+				num = a[i];
+			}
+		}
+	}
+	//cout << num << endl;
+	return num;
+}
+
+void sort_index(int size, int a[], int mode = UP)
+{
+	int find_num;
+
+	for (int i = 0; i < size; i++)
+	{
+		find_num = search(size, a);
+
+		for (int j = 0; j < size; j++)
+		{
+			if (find_num == a[j]) swap(a[j], a[i]), a[i] = -a[i];
+		}
+	}
+
+	for (int i = 0; i < size; i++)
+		a[i] = -a[i];
+
+	for (int i = 0; i < size; i++)
+		cout << a[i] << " ";
+}
+
+int main()
+{
+	int index[10] = { 5, 2, 4, 3, 1, 40, 20, 563, 34, 64};
+	int size = sizeof(index) / sizeof(index[0]);
+
+	sort_index(size, &index[0]);
+}
