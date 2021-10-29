@@ -1,12 +1,11 @@
 #include <iostream>
-//#include <algorithm>
 
 using namespace std;
 
 #define UP 0
 #define DOWN 1
 
-void swap(int* a, int* b)
+void swap(int* a, int* b) // 흔히 아는 스왑 함수
 {
 	int temp = *a;
 
@@ -14,56 +13,57 @@ void swap(int* a, int* b)
 	*b = temp;
 }
 
-int search(int size, int a[], int mode = UP)
+// mode = UP 큰 순 
+// mode = DOWN 작은 순
+int search(int size, int a[], int mode = UP) // 배열에서 고정된 배열빼고 젤 작은/큰 수 검색 함수
 {
 	int num = 0;
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size; i++) // 매개변수로 받은 배열 크기로 돌리는 반복문
 	{
-		if (a[i] > 0)
+		if (a[i] > 0) // 현재 배열이 0보다 작으면 고정된 수
 		{
-			if (num == 0)
+			if (num == 0) // 처음 검색 시작 
 			{
 				num = a[i];
 			}
-			else if (num > a[i] && mode == UP)
+			else if (num < a[i] && mode == UP) // 모드가 UP일 때
 			{
 				num = a[i];
 			}
-			else if (num < a[i] && mode == DOWN)
+			else if (num > a[i] && mode == DOWN) // 모드가 DOWN일 때
 			{
 				num = a[i];
 			}
 		}
 	}
-	//cout << num << endl;
 	return num;
 }
 
-void sort_index(int size, int a[], int mode = UP)
+void sort_index(int size, int a[], int mode = UP) // 정렬 함수 
 {
 	int find_num;
 
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size; i++) // 매개변수로 받은 배열 크기로 돌리는 반복문
 	{
-		find_num = search(size, a);
+		find_num = search(size, a, mode); // 원하는 수 찾기 ( 작은 수, 큰 수 )
 
-		for (int j = 0; j < size; j++)
+		for (int j = 0; j < size; j++) // 매개변수로 받은 배열 크기로 돌리는 반복문
 		{
-			if (find_num == a[j]) swap(a[j], a[i]), a[i] = -a[i];
+			if (find_num == a[j]) swap(a[j], a[i]), a[i] = -a[i]; // 찾은 수를 배열 앞 쪽으로 가져와 정렬함, 정렬한 배열 고정
 		}
 	}
 
 	for (int i = 0; i < size; i++)
-		a[i] = -a[i];
+		a[i] = -a[i]; // 고정된 배열 풀어주기
 
 	for (int i = 0; i < size; i++)
-		cout << a[i] << " ";
+		cout << a[i] << " "; // 정렬된 배열 디스플레이
 }
 
 int main()
 {
-	int index[10] = { 5, 2, 4, 3, 1, 40, 20, 563, 34, 64};
-	int size = sizeof(index) / sizeof(index[0]);
+	int index[10] = { 5, 2, 4, 3, 1, 40, 20, 563, 34, 64}; 
+	int size = sizeof(index) / sizeof(index[0]); // 배열 크기
 
 	sort_index(size, &index[0]);
 }
