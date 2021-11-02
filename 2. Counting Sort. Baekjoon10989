@@ -2,7 +2,9 @@
 
 using namespace std;
 
-int index[10001];
+#define input_max 10001
+
+int index[input_max];
 
 int main()
 {
